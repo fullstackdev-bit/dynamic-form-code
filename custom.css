@@ -1,0 +1,16 @@
+.form-container{
+    max-width: 580px;
+}
+.step-container{
+    display: none;
+}
+.step-container.active{
+    display: block;
+}
+.was-validated .form-check-input:invalid ~ .invalid-div {
+    border: 1px solid #dc3545;
+    border-radius: 5px;
+}  
+.mbsc-wheel-item-checkmark.mbsc-wheel-item-multi>div{
+    display: none !important;
+}        

@@ -4,29 +4,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">   
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/mobiscroll.javascript.min.css">
+        <link rel="stylesheet" href="css/custom.css">
         
     </head>
     <body class="bg-light">
-        <div class="container">
-            <style>
-                .form-container{
-                    max-width: 580px;
-                }
-                .step-container{
-                    display: none;
-                }
-                .step-container.active{
-                    display: block;
-                }
-                .was-validated .form-check-input:invalid ~ .invalid-div {
-                    border: 1px solid #dc3545;
-                    border-radius: 5px;
-                }          
-            </style>
+        <div class="container">            
             <div class="form-title text-center m-3 h2">Form Title</div>
             <div class="form-container multi_dynamic_form_container bg-white m-auto mt-5 p-4 rounded-3 shadow"></div>
             
         </div>
+        <script src="js/mobiscroll.javascript.min.js"></script>
         <script>
             var basic_html=`
             <form action="" method="post" class="multi-step-form needs-validation" novalidate>
@@ -41,10 +29,19 @@
                     <div class="step-container step-9" data-step="9"></div>
                     <div class="step-container step-10" data-step="10"></div>
                     <div class="step-container step-11" data-step="11"></div>
-                    <div class="next-step-area text-center d-grid gap-4 my-5">
-                        <button type="button" class="next-step-btn btn btn-warning bg-gradient fw-bold rounded-pill">Next Step</button>
-                        <button type="submit" class="submit-btn btn btn-primary bg-gradient fw-bold d-none rounded-pill">Submite</button>
-                    </div> 
+                    <div class="row justify-content-around step-btn-wrapper">
+                        <div class="col-6 prev-col d-none">
+                          <div class="next-step-area text-center d-grid gap-4 my-5">                        
+                            <button type="button" class="prev-step-btn btn btn-danger bg-gradient fw-bold rounded-pill">Previous Step</button>
+                          </div>
+                        </div>
+                        <div class="col-12 next-col">
+                          <div class="next-step-area text-center d-grid gap-4 my-5">                        
+                            <button type="button" class="next-step-btn btn btn-warning bg-gradient fw-bold rounded-pill">Next Step</button>
+                            <button type="submit" class="submit-btn btn btn-primary bg-gradient fw-bold d-none rounded-pill">Submite</button>
+                          </div>
+                        </div>
+                    </div>                    
                 </form>
                 <div class="progress-container">
                     <div class="progress-text text-center mb-2 h5"><span class="progress-num">0</span>% complete</div>
@@ -466,7 +463,8 @@
                         </div>
                         `;
             var html_2_3 = `<div class="mb-3">
-                            <label for="jurisdictions_preferences_countries" class="form-label">Which countries? (Use <i class="fw-bold">"Control key"</i> for multi select)</label>
+                            <label for="jurisdictions_preferences_countries_input" class="form-label">Which countries?</label>
+                            <input mbsc-input class="form-control" id="jurisdictions_preferences_countries_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
                             <select class="form-select" multiple id="jurisdictions_preferences_countries" name="jurisdictions_preferences_countries" required>
                                 ${country_list}
                             </select>
@@ -491,7 +489,8 @@
                             <div class="mt-3 step_3_rest_content"></div>
                         </div>`;
             var html_3_1 = `<div class="mb-3">
-                            <label for="investors_located" class="form-label">Where are the investors located? (Use <i class="fw-bold">"Control key"</i> for multi select)</label>
+                            <label for="investors_located_input" class="form-label">Where are the investors located?</label>
+                            <input mbsc-input class="form-control" id="investors_located_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
                             <select class="form-select" multiple id="investors_located" name="investors_located_countries" required>
                                 ${country_list}
                             </select>
@@ -710,16 +709,16 @@
                             <div class="mt-3 token_airdrop_benefit_content"></div>
                         </div>`;
             
-            var html_6 = `<h2 class="text-center mb-4">Team</h2><div class="mb-3">
-                            <label for="work_method" class="form-label fw-bold">Do you work remotely? Or do you have a physical office? </label>
-                            <input type="text" class="form-control" id="work_method" name="work_method" placeholder="Remotely or Physical office" required>
+            var html_6 = `<h2 class="text-center mb-4">Team</h2><div class="mb-3 mt-3">
+                            <label class="form-label fw-bold">Do you have a physical office?</label>
+                            <input type="radio" class="form-check-input d-none" id="have_physical_office_yes" name="have_physical_office" value="yes" required>
+                            <input type="radio" class="form-check-input d-none" id="have_physical_office_no" name="have_physical_office" value="no" required>
+                            <div class="d-grid gap-2 d-md-block invalid-div p-1">
+                                <button type="button" class="have_physical_office_yes btn btn-success me-0 me-md-2">Yes <span class="d-none">&nbsp; ✓</span></button>
+                                <button type="button" class="have_physical_office_no btn btn-danger">No <span class="d-none">&nbsp; ✓</span></button>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="team_located" class="form-label">Which country is the team located? (Use <i class="fw-bold">"Control key"</i> for multi select)</label>
-                            <select class="form-select" multiple id="team_located" name="team_located_countries" required>
-                                ${country_list}
-                            </select>
-                        </div>`;
+                        <div class="mb-3 step_6_rest_content"></div>`;
 
             var html_7 = `<h2 class="text-center mb-4">Intellectual property</h2><div class="mb-3">
                             <label class="form-label fw-bold">Do you have or will have an intellectual property?</label>
@@ -742,7 +741,7 @@
                             <div class="mt-3 ms-3 register_ip_content"></div>
                         </div>`;
             var html_7_2 = `<div class="mb-3">
-                            <label for="ip_registered_country" class="form-label  fw-bold">Which country is the team located?</label>
+                            <label for="ip_registered_country" class="form-label  fw-bold">Which country IP?</label>
                             <select class="form-select" id="ip_registered_country" name="ip_registered_country" required>
                                 ${country_list}
                             </select>
@@ -753,12 +752,12 @@
                         </div>`;
             
             var html_8 = `<h2 class="text-center mb-4">Shareholder information</h2><div class="mb-3">
-                            <label class="form-label fw-bold">Do you have sharefolder(s)?</label>
+                            <label class="form-label fw-bold">Do you have shareholder(s)?</label>
                             <input type="radio" class="form-check-input d-none" id="only_shareholder" name="Have_shareholder" value="I am the only shareholder" required>
-                            <input type="radio" class="form-check-input d-none" id="other_shareholder" name="Have_shareholder" value="Another company is a shareholder" required>
+                            <input type="radio" class="form-check-input d-none" id="other_shareholder" name="Have_shareholder" value="I am not the only shareholder" required>
                             <div class="d-grid gap-2 invalid-div p-1">
                                 <button type="button" class="only_shareholder btn btn-success"><span class="d-none">✓ &nbsp; </span> I am the only shareholder</button>
-                                <button type="button" class="other_shareholder btn btn-success"><span class="d-none">✓ &nbsp; </span> Another company is a shareholder</button>
+                                <button type="button" class="other_shareholder btn btn-success"><span class="d-none">✓ &nbsp; </span> I am not the only shareholder</button>
                             </div>
                             <div class="mt-3 step_8_rest_content"></div>
                         </div>`;
@@ -771,17 +770,22 @@
                                 <option value="Company">Company</option>
                               </select>
                             <div class="mt-3 shareholder_infos${shareholder_block}"></div>
-                            <div class="mt-3 shareholder_${shareholder_block+1}"></div>
-                            <button type="button" class="add_new_shareholder btn btn-info">Add another shareholder</button>
-                            </div>`;
+                            <div class="mt-3 shareholder_${shareholder_block+1}" block_num = "${shareholder_block+1}"></div>
+                            <div class="row">
+                                <div class="col-8"><button type="button" class="add_new_shareholder btn btn-info">Add another shareholder</button></div>
+                                <div class="col-4 text-end"><button type="button" class="remove_last_shareholder btn btn-danger d-none" block_num = "${shareholder_block}">Remove</button></div>
+                            </div>
+                            </div>
+                            `;
             
             var html_9 = `<h2 class="text-center mb-4">Clients</h2><div class="mb-3">
                             <label for="clients_info" class="form-label fw-bold">Who are your clients?</label>
                             <input type="text" class="form-control" id="clients_info" name="clients_info" placeholder="Clients" required>
                         </div>
                         <div class="mb-3">
-                            <label for="client_location" class="form-label fw-bold">Where are they located?</label>
-                            <select class="form-select" id="client_location" name="client_location" required>
+                            <label for="client_location_input" class="form-label fw-bold">Where are they located?</label>
+                            <input mbsc-input class="form-control" id="client_location_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
+                            <select class="form-select" multiple id="client_location" name="client_location" required>
                                 ${country_list}
                             </select>
                         </div>`;
@@ -823,7 +827,30 @@
 
             document.querySelector('.step-1').innerHTML = html_1;
             step1Actions();
-            var form = document.querySelector('.multi-step-form');            
+            var form = document.querySelector('.multi-step-form'); 
+            
+            document.querySelector('.prev-step-btn').addEventListener('click',function(){
+                var current_step = document.querySelector('.step-container.active').getAttribute('data-step')*1;
+                var prev_step = current_step - 1;                
+                document.querySelector('.step-container.active').innerHTML = '';
+                document.querySelector('.step-container.active').classList.remove('active');                  
+                document.querySelector('.step-'+prev_step).classList.add('active');
+                document.querySelector('.progress-num').innerText = 10*prev_step;
+                document.querySelector('.progress-bar').style.width = 10*prev_step+'%';
+                if(document.querySelector('.step-container.active').innerHTML == ''){
+                    document.querySelector('.prev-step-btn').click();
+                }
+                if(prev_step == 1){
+                    document.querySelector('.prev-col').classList.add('d-none');
+                    document.querySelector('.next-col').classList.add('col-12');
+                    document.querySelector('.next-col').classList.remove('col-6'); 
+                }   
+                if(prev_step == 9){
+                    document.querySelector('.next-step-btn').classList.remove('d-none');
+                    document.querySelector('.submit-btn').classList.add('d-none')
+                }               
+
+            })
 
             document.querySelector('.next-step-btn').addEventListener('click', function(){
                 if (form.checkValidity()) {
@@ -837,7 +864,12 @@
                   if(next_step == 10){
                     document.querySelector('.next-step-btn').classList.add('d-none');
                     document.querySelector('.submit-btn').classList.remove('d-none') 
-                  }               
+                  } 
+                  if(next_step == 2){
+                    document.querySelector('.prev-col').classList.remove('d-none');
+                    document.querySelector('.next-col').classList.remove('col-12');
+                    document.querySelector('.next-col').classList.add('col-6'); 
+                  }              
                   switch(next_step){
                       case 2:
                       document.querySelector('.step-2').innerHTML = html_2;
@@ -860,7 +892,8 @@
                       }   
                       break;                      
                       case 6:
-                      document.querySelector('.step-6').innerHTML = html_6;                      
+                      document.querySelector('.step-6').innerHTML = html_6; 
+                      step6Actions()                     
                       break;
                       case 7:
                       document.querySelector('.step-7').innerHTML = html_7;
@@ -871,7 +904,8 @@
                       step8Actions();
                       break;
                       case 9:
-                      document.querySelector('.step-9').innerHTML = html_9;                      
+                      document.querySelector('.step-9').innerHTML = html_9; 
+                      step9Actions();                     
                       break;
                       case 10:
                       document.querySelector('.step-10').innerHTML = html_10;                      
@@ -989,7 +1023,11 @@
                     document.querySelector('#jurisdictions_preferences_open_other_countries_no').click();
                     document.querySelector('.jurisdictions_preferences_open_other_countries_no span').classList.remove('d-none');
                     document.querySelector('.jurisdictions_preferences_open_other_countries_yes span').classList.add('d-none');                    
-                })
+                });
+                mobiscroll.select('#jurisdictions_preferences_countries', {
+                    inputElement: document.getElementById('jurisdictions_preferences_countries_input'),
+                    touchUi: false
+                });
             };
 
             function step3Actions(){
@@ -998,6 +1036,11 @@
                     document.querySelector('.raised_funding_yes span').classList.remove('d-none');
                     document.querySelector('.raised_funding_no span').classList.add('d-none');
                     document.querySelector('.step_3_rest_content').innerHTML = html_3_1;
+                    mobiscroll.select('#investors_located', {
+                        inputElement: document.getElementById('investors_located_input'),
+                        touchUi: false
+                    });
+
                     document.querySelector('#raise6').addEventListener('click', function(evt){
                         if(evt.target.checked){
                             document.querySelector('.raise_method_token_content').innerHTML = html_3_1_1;
@@ -1202,6 +1245,29 @@
                 
             }
             
+            function step6Actions(){
+                document.querySelector('.have_physical_office_yes').addEventListener('click', function(){
+                    document.querySelector('#have_physical_office_yes').click();
+                    document.querySelector('.have_physical_office_yes span').classList.remove('d-none');
+                    document.querySelector('.have_physical_office_no span').classList.add('d-none'); 
+                    document.querySelector('.step_6_rest_content').innerHTML = `<label for="team_located_input" class="form-label fw-bold">Which country is the team located?</label>
+                    <input mbsc-input class="form-control" id="team_located_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
+                            <select class="form-select" multiple id="team_located" name="team_located_countries" required>
+                                ${country_list}
+                            </select>`;
+                    mobiscroll.select('#team_located', {
+                        inputElement: document.getElementById('team_located_input'),
+                        touchUi: false
+                    });                                                        
+                })
+                document.querySelector('.have_physical_office_no').addEventListener('click', function(){
+                    document.querySelector('#have_physical_office_no').click();
+                    document.querySelector('.have_physical_office_no span').classList.remove('d-none');
+                    document.querySelector('.have_physical_office_yes span').classList.add('d-none'); 
+                    document.querySelector('.step_6_rest_content').innerHTML = '';                   
+                })
+            }
+            
             function step7Actions(){
                 document.querySelector('.have_intellectual_property_yes').addEventListener('click', function(){
                     document.querySelector('#have_intellectual_property_yes').click();
@@ -1249,8 +1315,22 @@
             }
             function step8Actions2(){
                 newShareholderAction(1);
+                shareholder_block = 1;
+                document.querySelector('.remove_last_shareholder').addEventListener('click',function(evt){
+                    var last_num = evt.target.getAttribute('block_num');
+                    document.querySelector('.shareholder_'+last_num).innerHTML='';
+                    shareholder_block--;
+                    if(shareholder_block == 1){
+                        document.querySelector('.remove_last_shareholder').classList.add('d-none')
+                    }
+                    document.querySelector('.remove_last_shareholder').setAttribute('block_num',shareholder_block);
+                });
                 document.querySelector('.add_new_shareholder').addEventListener('click', function(){
                     shareholder_block++;
+                    if(shareholder_block == 2){
+                        document.querySelector('.remove_last_shareholder').classList.remove('d-none')
+                    }
+                    document.querySelector('.remove_last_shareholder').setAttribute('block_num',shareholder_block);
                     document.querySelector('.shareholder_'+shareholder_block).innerHTML = `
                         <label for="shareholder${shareholder_block}_type" class="form-label fw-bold">Shareholder ${shareholder_block} information</label>
                             <select id="shareholder${shareholder_block}_type" class="form-select" name="shareholder${shareholder_block}_type" required>
@@ -1265,10 +1345,27 @@
                 })                
             }
             
+            function step9Actions(){
+                mobiscroll.select('#client_location', {
+                    inputElement: document.getElementById('client_location_input'),
+                    touchUi: false
+                });
+            }
+
             function newShareholderAction(id){
                 document.querySelector('#shareholder'+id+'_type').addEventListener('change',function(sevt){
                     if(sevt.target.value == "Person"){
                         document.querySelector('.shareholder_infos'+id).innerHTML = `
+                        <div class="row mb-3">
+                            <div class="col-8">
+                                <label for="shareholder${id}_name" class="form-label fw-bold">Name</label>
+                                <input type="text" class="form-control" id="shareholder${id}_name" name="shareholder${id}_name" placeholder="Name" required>
+                            </div>
+                            <div class="col-4">
+                                <label for="shareholder${id}_division" class="form-label fw-bold">% of shares</label>
+                                <input type="text" class="form-control" id="shareholder${id}_division" name="shareholder${id}_division" placeholder="Division %" required>
+                            </div>
+                        </div>
                         <label for="shareholder${id}_nationality" class="form-label">Nationality</label>
                         <select class="form-select mb-3" id="shareholder${id}_nationality" name="shareholder${id}_nationality" required>
                           ${country_list}
@@ -1279,6 +1376,16 @@
                         </select>`;
                     }else if(sevt.target.value == "Company"){
                         document.querySelector('.shareholder_infos'+id).innerHTML = `
+                        <div class="row mb-3">
+                            <div class="col-8">
+                                <label for="shareholder${id}_name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="shareholder${id}_name" name="shareholder${id}_name" placeholder="Name" required>
+                            </div>
+                            <div class="col-4">
+                                <label for="shareholder${id}_division" class="form-label">% of shares</label>
+                                <input type="text" class="form-control" id="shareholder${id}_division" name="shareholder${id}_division" placeholder="Division %" required>
+                            </div>
+                        </div>
                         <label for="shareholder${id}_location" class="form-label">Location</label>
                         <select type="text" class="form-select" id="shareholder${id}_location" name="shareholder${id}_location" required>
                             ${country_list}
