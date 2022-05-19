@@ -51,6 +51,7 @@
                 </div>
             `;
             var country_list = `<option selected disabled value>Select country...</option>
+                                <option value="worldwide">Worldwide</option>
                                 <option value="Afghanistan">Afghanistan</option>
                                 <option value="Åland Islands">Åland Islands</option>
                                 <option value="Albania">Albania</option>
@@ -310,9 +311,10 @@
                             <input type="email" class="form-control" id="email" name="Email" aria-describedby="emailHelp" placeholder="Email address" required>
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
-                        <div class="mb-3">
-                            <label for="country_residence" class="form-label fw-bold">Country of residence</label>
-                            <select class="form-select" id="country_residence" name="CountryResidence" required>
+                        <label for="country_residence_input" class="form-label fw-bold">Country of residence</label>
+                        <div class="mb-3">                            
+                            <input mbsc-input class="form-control" id="country_residence_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
+                            <select multiple class="form-select" id="country_residence" name="CountryResidence" required>
                                 ${country_list}
                             </select>
                         </div>
@@ -325,9 +327,10 @@
                                 <button type="button" class="change_residency_no btn btn-danger">No <span class="d-none">&nbsp; ✓</span></button>
                             </div>  
                         </div>
-                        <div class="mb-3">
-                            <label for="country_citizenship" class="form-label fw-bold">Country of citizenship</label>
-                            <select class="form-select" id="country_citizenship" name="CountryCitizenship" required>
+                        <label for="" class="form-label fw-bold">Country of citizenship</label>
+                        <div class="mb-3">                            
+                            <input mbsc-input class="form-control" id="country_citizenship_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
+                            <select multiple class="form-select" id="country_citizenship" name="CountryCitizenship" required>
                                 ${country_list}
                             </select>
                         </div>
@@ -399,8 +402,9 @@
                             <label class="form-check-label" for="registered2">Operational</label>
                         </div><div class="mt-3 ms-5 company_registered_state_operational_content"></div>`; 
             var html_2_1_1 = `<div class="mb-3">
-                            <label for="company_registered_state_holding_country" class="form-label">Which country?</label>
-                            <select class="form-select" id="company_registered_state_holding_country" name="company_registered_state_holding_country" required>
+                            <label for="company_registered_state_holding_country_input" class="form-label">Which country?</label>
+                            <input mbsc-input class="form-control" id="company_registered_state_holding_country_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
+                            <select multiple class="form-select" id="company_registered_state_holding_country" name="company_registered_state_holding_country" required>
                                 ${country_list}
                             </select>
                         </div>
@@ -414,8 +418,9 @@
                             </div>                            
                         </div>`;   
             var html_2_1_2 = `<div class="mb-3">
-                            <label for="company_registered_state_operational_country" class="form-label">Which country?</label>
-                            <select class="form-select" id="company_registered_state_operational_country" name="company_registered_state_operational_country" required>
+                            <label for="company_registered_state_operational_country_input" class="form-label">Which country?</label>
+                            <input mbsc-input class="form-control" id="company_registered_state_operational_country_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
+                            <select multiple class="form-select" id="company_registered_state_operational_country" name="company_registered_state_operational_country" required>
                                 ${country_list}
                             </select>
                         </div>
@@ -741,8 +746,9 @@
                             <div class="mt-3 ms-3 register_ip_content"></div>
                         </div>`;
             var html_7_2 = `<div class="mb-3">
-                            <label for="ip_registered_country" class="form-label  fw-bold">Which country IP?</label>
-                            <select class="form-select" id="ip_registered_country" name="ip_registered_country" required>
+                            <label for="ip_registered_country_input" class="form-label  fw-bold">Which country IP?</label>
+                            <input mbsc-input class="form-control" id="ip_registered_country_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
+                            <select class="form-select" multiple id="ip_registered_country" name="ip_registered_country" required>
                                 ${country_list}
                             </select>
                         </div>
@@ -825,7 +831,7 @@
             (function () {
             'use strict'
 
-            document.querySelector('.step-1').innerHTML = html_1;
+            document.querySelector('.step-1').innerHTML = html_1;            
             step1Actions();
             var form = document.querySelector('.multi-step-form'); 
             
@@ -926,7 +932,15 @@
                     document.querySelector('#change_residency_no').click();
                     document.querySelector('.change_residency_no span').classList.remove('d-none');
                     document.querySelector('.change_residency_yes span').classList.add('d-none');
-                })                
+                });
+                mobiscroll.select('#country_residence', {
+                    inputElement: document.getElementById('country_residence_input'),
+                    touchUi: false
+                }); 
+                mobiscroll.select('#country_citizenship', {
+                    inputElement: document.getElementById('country_citizenship_input'),
+                    touchUi: false
+                });                 
             }
             
             function step2Actions(){
@@ -1000,6 +1014,10 @@
                     document.querySelector('.company_registered_state_holding_already_operating_no span').classList.remove('d-none');
                     document.querySelector('.company_registered_state_holding_already_operating_yes span').classList.add('d-none');                    
                 })
+                mobiscroll.select('#company_registered_state_holding_country', {
+                    inputElement: document.getElementById('company_registered_state_holding_country_input'),
+                    touchUi: false
+                });                 
             };
             function step2Actions1_2(){
                 document.querySelector('.company_registered_state_operational_already_operating_yes').addEventListener('click', function(){
@@ -1011,7 +1029,12 @@
                     document.querySelector('#company_registered_state_operational_already_operating_no').click();
                     document.querySelector('.company_registered_state_operational_already_operating_no span').classList.remove('d-none');
                     document.querySelector('.company_registered_state_operational_already_operating_yes span').classList.add('d-none');                    
-                })
+                });
+                mobiscroll.select('#company_registered_state_operational_country', {
+                    inputElement: document.getElementById('company_registered_state_operational_country_input'),
+                    touchUi: false
+                }); 
+                
             };
             function step2Actions2_3(){
                 document.querySelector('.jurisdictions_preferences_open_other_countries_yes').addEventListener('click', function(){
@@ -1289,6 +1312,10 @@
                     document.querySelector('.register_ip_yes span').classList.remove('d-none');
                     document.querySelector('.register_ip_no span').classList.add('d-none');
                     document.querySelector('.register_ip_content').innerHTML = html_7_2;
+                    mobiscroll.select('#ip_registered_country', {
+                        inputElement: document.getElementById('ip_registered_country_input'),
+                        touchUi: false
+                    });                     
                 })
                 document.querySelector('.register_ip_no').addEventListener('click', function(){
                     document.querySelector('#register_ip_no').click();
@@ -1366,14 +1393,24 @@
                                 <input type="text" class="form-control" id="shareholder${id}_division" name="shareholder${id}_division" placeholder="Division %" required>
                             </div>
                         </div>
-                        <label for="shareholder${id}_nationality" class="form-label">Nationality</label>
-                        <select class="form-select mb-3" id="shareholder${id}_nationality" name="shareholder${id}_nationality" required>
+                        <label for="shareholder${id}_nationality_input" class="form-label">Nationality</label>
+                        <input mbsc-input class="form-control mb-3" id="shareholder${id}_nationality_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
+                        <select class="form-select mb-3" multiple id="shareholder${id}_nationality" name="shareholder${id}_nationality" required>
                           ${country_list}
                         </select>
-                        <label for="shareholder${id}_residence" class="form-label">Residence</label>
-                        <select class="form-select" id="shareholder${id}_residence" name="shareholder${id}_residence" required>
+                        <label for="shareholder${id}_residence_input" class="form-label">Residence</label>
+                        <input mbsc-input class="form-control mb-3" id="shareholder${id}_residence_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
+                        <select class="form-select" multiple id="shareholder${id}_residence" name="shareholder${id}_residence" required>
                             ${country_list}
                         </select>`;
+                        mobiscroll.select('#shareholder'+id+'_nationality', {
+                            inputElement: document.getElementById('shareholder'+id+'_nationality_input'),
+                            touchUi: false
+                        }); 
+                        mobiscroll.select('#shareholder'+id+'_residence', {
+                            inputElement: document.getElementById('shareholder'+id+'_residence_input'),
+                            touchUi: false
+                        }); 
                     }else if(sevt.target.value == "Company"){
                         document.querySelector('.shareholder_infos'+id).innerHTML = `
                         <div class="row mb-3">
@@ -1386,10 +1423,15 @@
                                 <input type="text" class="form-control" id="shareholder${id}_division" name="shareholder${id}_division" placeholder="Division %" required>
                             </div>
                         </div>
-                        <label for="shareholder${id}_location" class="form-label">Location</label>
-                        <select type="text" class="form-select" id="shareholder${id}_location" name="shareholder${id}_location" required>
+                        <label for="shareholder${id}_location_input" class="form-label">Location</label>
+                        <input mbsc-input class="form-control mb-3" id="shareholder${id}_location_input" data-dropdown="true" data-tags="true" placeholder="Select countries..." required/>
+                        <select type="text" multiple class="form-select" id="shareholder${id}_location" name="shareholder${id}_location" required>
                             ${country_list}
                         </select>`;
+                        mobiscroll.select('#shareholder'+id+'_location', {
+                            inputElement: document.getElementById('shareholder'+id+'_location_input'),
+                            touchUi: false
+                        }); 
                     }
                 })
             }            
