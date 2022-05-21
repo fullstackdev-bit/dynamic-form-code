@@ -9,26 +9,25 @@
         
     </head>
     <body class="bg-light">
-        <div class="container">            
+        <div class="custom-container bg-light">            
             <div class="form-title text-center m-3 h2">Form Title</div>
-            <div class="form-container multi_dynamic_form_container bg-white m-auto mt-5 p-4 rounded-3 shadow"></div>
-            
+            <div class="form-container multi_dynamic_form_container bg-white m-auto mt-5 p-4 rounded-3 shadow"></div>            
         </div>
         <script src="js/mobiscroll.javascript.min.js"></script>
         <script>
             var basic_html=`
             <form action="" method="post" class="multi-step-form needs-validation" novalidate>
-                    <div class="step-container step-1 active" data-step="1"></div>
-                    <div class="step-container step-2" data-step="2"></div>
-                    <div class="step-container step-3" data-step="3"></div>
-                    <div class="step-container step-4" data-step="4"></div>
-                    <div class="step-container step-5" data-step="5"></div>
-                    <div class="step-container step-6" data-step="6"></div>
-                    <div class="step-container step-7" data-step="7"></div>
-                    <div class="step-container step-8" data-step="8"></div>
-                    <div class="step-container step-9" data-step="9"></div>
-                    <div class="step-container step-10" data-step="10"></div>
-                    <div class="step-container step-11" data-step="11"></div>
+                    <div class="step-container js-step-1 active" data-step="1"></div>
+                    <div class="step-container js-step-2" data-step="2"></div>
+                    <div class="step-container js-step-3" data-step="3"></div>
+                    <div class="step-container js-step-4" data-step="4"></div>
+                    <div class="step-container js-step-5" data-step="5"></div>
+                    <div class="step-container js-step-6" data-step="6"></div>
+                    <div class="step-container js-step-7" data-step="7"></div>
+                    <div class="step-container js-step-8" data-step="8"></div>
+                    <div class="step-container js-step-9" data-step="9"></div>
+                    <div class="step-container js-step-10" data-step="10"></div>
+                    <div class="step-container js-step-11" data-step="11"></div>
                     <div class="row justify-content-around step-btn-wrapper">
                         <div class="col-6 prev-col d-none">
                           <div class="next-step-area text-center d-grid gap-4 my-5">                        
@@ -38,7 +37,7 @@
                         <div class="col-12 next-col">
                           <div class="next-step-area text-center d-grid gap-4 my-5">                        
                             <button type="button" class="next-step-btn btn btn-warning bg-gradient fw-bold rounded-pill">Next Step</button>
-                            <button type="submit" class="submit-btn btn btn-primary bg-gradient fw-bold d-none rounded-pill">Submite</button>
+                            <button type="submit" class="submit-btn btn btn-primary bg-gradient fw-bold d-none rounded-pill">Submit</button>
                           </div>
                         </div>
                     </div>                    
@@ -831,7 +830,7 @@
             (function () {
             'use strict'
 
-            document.querySelector('.step-1').innerHTML = html_1;            
+            document.querySelector('.js-step-1').innerHTML = html_1;            
             step1Actions();
             var form = document.querySelector('.multi-step-form'); 
             
@@ -840,7 +839,7 @@
                 var prev_step = current_step - 1;                
                 document.querySelector('.step-container.active').innerHTML = '';
                 document.querySelector('.step-container.active').classList.remove('active');                  
-                document.querySelector('.step-'+prev_step).classList.add('active');
+                document.querySelector('.js-step-'+prev_step).classList.add('active');
                 document.querySelector('.progress-num').innerText = 10*prev_step;
                 document.querySelector('.progress-bar').style.width = 10*prev_step+'%';
                 if(document.querySelector('.step-container.active').innerHTML == ''){
@@ -864,7 +863,7 @@
                   var current_step = document.querySelector('.step-container.active').getAttribute('data-step')*1; 
                   var next_step = current_step + 1; 
                   document.querySelector('.step-container.active').classList.remove('active');                  
-                  document.querySelector('.step-'+next_step).classList.add('active');                  
+                  document.querySelector('.js-step-'+next_step).classList.add('active');                  
                   document.querySelector('.progress-num').innerText = 10*current_step;
                   document.querySelector('.progress-bar').style.width = 10*current_step+'%';
                   if(next_step == 10){
@@ -878,43 +877,43 @@
                   }              
                   switch(next_step){
                       case 2:
-                      document.querySelector('.step-2').innerHTML = html_2;
+                      document.querySelector('.js-step-2').innerHTML = html_2;
                       step2Actions();
                       break;
                       case 3:
-                      document.querySelector('.step-3').innerHTML = html_3;
+                      document.querySelector('.js-step-3').innerHTML = html_3;
                       step3Actions();
                       break;                     
                       case 4:
-                      document.querySelector('.step-4').innerHTML = html_4;
+                      document.querySelector('.js-step-4').innerHTML = html_4;
                       step4Actions();
                       break;
                       case 5:
                       if(document.querySelector('#token_issuance_yes').checked){
-                        document.querySelector('.step-5').innerHTML = html_5;
+                        document.querySelector('.js-step-5').innerHTML = html_5;
                         step5Actions();
                       }else{
                         document.querySelector('.next-step-btn').click();
                       }   
                       break;                      
                       case 6:
-                      document.querySelector('.step-6').innerHTML = html_6; 
+                      document.querySelector('.js-step-6').innerHTML = html_6; 
                       step6Actions()                     
                       break;
                       case 7:
-                      document.querySelector('.step-7').innerHTML = html_7;
+                      document.querySelector('.js-step-7').innerHTML = html_7;
                       step7Actions();
                       break;
                       case 8:
-                      document.querySelector('.step-8').innerHTML = html_8;
+                      document.querySelector('.js-step-8').innerHTML = html_8;
                       step8Actions();
                       break;
                       case 9:
-                      document.querySelector('.step-9').innerHTML = html_9; 
+                      document.querySelector('.js-step-9').innerHTML = html_9; 
                       step9Actions();                     
                       break;
                       case 10:
-                      document.querySelector('.step-10').innerHTML = html_10;                      
+                      document.querySelector('.js-step-10').innerHTML = html_10;                      
                       break;                      
                   }
                 }else{
