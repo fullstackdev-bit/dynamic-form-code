@@ -95,11 +95,13 @@ function ssQzRedirectSet(x, ac, qz) {
 }
 
 function ssQzLocoSet(x, qz) {
+	console.log(x);
 	if(x === undefined || qz === undefined) {return}
 	if(!x.hasOwnProperty("el") || !qz.hasOwnProperty("loco")) {return}
 	if(x.el.tagName.toLowerCase() == "input" || x.el.tagName.toLowerCase() == "select") {
 		let a = x.el.getAttribute("name");
 		if(x.hasOwnProperty("options") && x.options.hasOwnProperty("name")) {a = x.options.name}
+		console.log(a);
 		if(x.el.value != "" || x.el.checked == true) {qz.loco[a] = x.el.value}
 		else if(qz.loco.hasOwnProperty(a)) {delete qz.loco[a]}
 		let b = JSON.stringify(qz.loco);
